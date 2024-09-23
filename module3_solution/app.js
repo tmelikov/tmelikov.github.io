@@ -5,18 +5,25 @@
     .controller('NarrowItDownController', NarrowItDownController)
     .service('MenuSearchService', MenuSearchService)
     .constant('MenuApiPath', "https://coursera-jhu-default-rtdb.firebaseio.com")
-    .directive('foundItems', FoundItems);
+    .directive('foundItems', FoundItemsDirective);
 
-    function FoundItems(){
+    function FoundItemsDirective(){
         var ddo ={
             templateUrl: 'foundItems.html',
             scope: {
-                list: '<',
+                found: '<',
                 onRemove: '&'
-            }
+            },
+          controller: FoundItemsDirectiveController,
+          controllerAs: 'list',
+          bindToController: true
         };
         return ddo;
     };
+    
+    function FoundItemsDirectiveController(){
+      var list = this;
+    }
     
     NarrowItDownController.$inject = ['MenuSearchService'];
     
@@ -24,7 +31,8 @@
 
         var menu = this;
 
-        menu.searchTerm ="Test";
+        menu.searchTerm ="chicken";
+        menu.actualAction = "some action";
 
         menu.found = [];
         menu.getItems = function(){
@@ -37,21 +45,20 @@
             .then(function(response){
                 console.log("got data.");
                 var completeList = response.data;
+                
                 menu.found = completeList;
+                menu.actualAction = "results found: " + menu.found;
 
             })
             .catch(function(error){
                 console.log(error)
             })
 
-
-            //menu.found = MenuSearchService.getMatchedMenuItems(menu.searchTerm);
-
-            console.log("menu: ",menu.found);
+            console.log("menu: ", menu.found);
         }
 
         menu.removeItem = function(itemIndex){
-            console.log("remove item: ", itemIndex);
+            menu.actualAction = "remove item: " + itemIndex;
         };
 
     };

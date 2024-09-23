@@ -9,8 +9,10 @@
     <link rel="stylesheet" href="styles/styles.css">
   </head>
 <body>
-   <div class="container"ng-controller='NarrowItDownController as menu'>
+   <div ng-controller='NarrowItDownController as menu'>
     <h1>Narrow Down Your Chinese Menu Choice</h1>
+    
+    <div>test {{menu.actualAction}}</div>
 
     <div class="form-group">
       <input type="text" placeholder="search term" class="form-control" ng-model="menu.searchTerm">
@@ -18,8 +20,17 @@
     <div class="form-group narrow-button">
       <button class="btn btn-primary" ng-click="menu.getItems();">Narrow It Down For Me!</button>
     </div>
+    
+    <!--h3>Found List Directive</h3>
+<ol>
+  <li ng-repeat="item in menu.found">
+    {{ item }} 
+    <button ng-click="menu.onRemove({index: $index});">Narrow it</button>
+  </li>
+</ol-->
 
-    <found-items list="menu" on-remove="menu.removeItem(index)"></found-items>
+
+    <found-items found="menu.found" on-remove="menu.removeItem(index)"></found-items>
   </div>
 
 </body>
