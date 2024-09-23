@@ -5,27 +5,26 @@
     .controller('NarrowItDownController', NarrowItDownController)
     .service('MenuSearchService', MenuSearchService)
     .constant('MenuApiPath', "https://coursera-jhu-default-rtdb.firebaseio.com")
-    .directive('foundItems', FoundItems);
+    .directive('foundItems', FoundItemsDirective);
 
-    function FoundItems(){
+    function FoundItemsDirective(){
         var ddo ={
             templateUrl: 'foundItems.html',
             scope: {
-                items: '<',
+                found: '<',
                 onRemove: '&'
             },
-            controller: NarrowItDownListController,
-            controllerAs: 'list',
-            bindToController:true
+          controller: FoundItemsDirectiveController,
+          controllerAs: 'list',
+          bindToController: true
         };
         return ddo;
     };
     
-    function NarrowItDownListController(){
-        var list = this;
+    function FoundItemsDirectiveController(){
+      var list = this;
     }
-
-
+    
     NarrowItDownController.$inject = ['MenuSearchService'];
     
     function NarrowItDownController(MenuSearchService){
@@ -33,16 +32,16 @@
         var menu = this;
 
         menu.searchTerm ="chicken";
-
-        var found = [];
+        menu.actualAction = "some action";
+        menu.found = [];
 
         menu.getItems = function(){
 
             console.log("get menu items!");
 
-            if(found.length !== 0)
+            if(menu.found.length !== 0)
             {
-                found.length = 0;
+                menu.found.length = 0;
             }
 
             var promise = MenuSearchService.getMatchedMenuItems();
@@ -63,26 +62,22 @@
                         console.log(item);
                         if(item.description.indexOf(menu.searchTerm) !==-1)
                             {
-                                found.push(item);
+                                menu.found.push(item);
                             };
-                    });
-
-                    
+                    });                    
                 });
 
-                console.log("founs items in the menu:", found);
+                console.log("founs items in the menu:", menu.found);
 
             })
             .catch(function(error){
                 console.log(error)
             })
-
-            console.log("menu: ", found);
         }
 
         menu.removeItem = function(itemIndex){
-            console.log("remove item: ", itemIndex);
-            menu.found.splice(itemIndex, 1)
+            menu.actualAction = "remove item: " + itemIndex;
+            menu.found.splice(itemIndex, 1);
         };
 
     };

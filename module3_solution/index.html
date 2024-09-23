@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="styles/styles.css">
   </head>
 <body>
-   <div class="container" ng-controller='NarrowItDownController as menu'>
+   <div ng-controller='NarrowItDownController as menu'>
     <h1>Narrow Down Your Chinese Menu Choice</h1>
 
     <div class="form-group">
@@ -18,9 +18,7 @@
     <div class="form-group narrow-button">
       <button class="btn btn-primary" ng-click="menu.getItems();">Narrow It Down For Me!</button>
     </div>
-    <div>
-      <found-items items="menu.found" on-remove="menu.removeItem(index)"></found-items>
-    </div>
+   <div class="form-group"><found-items found="menu.found" on-remove="menu.removeItem(index)"></found-items></div>
   </div>
   
 
