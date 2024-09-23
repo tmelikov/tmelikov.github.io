@@ -11,47 +11,78 @@
         var ddo ={
             templateUrl: 'foundItems.html',
             scope: {
-                list: '<',
+                items: '<',
                 onRemove: '&'
-            }
+            },
+            controller: NarrowItDownListController,
+            controllerAs: 'list',
+            bindToController:true
         };
         return ddo;
     };
     
+    function NarrowItDownListController(){
+        var list = this;
+    }
+
+
     NarrowItDownController.$inject = ['MenuSearchService'];
     
     function NarrowItDownController(MenuSearchService){
 
         var menu = this;
 
-        menu.searchTerm ="Test";
+        menu.searchTerm ="chicken";
 
-        menu.found = [];
+        var found = [];
+
         menu.getItems = function(){
 
             console.log("get menu items!");
+
+            if(found.length !== 0)
+            {
+                found.length = 0;
+            }
 
             var promise = MenuSearchService.getMatchedMenuItems();
 
             promise
             .then(function(response){
                 console.log("got data.");
-                var completeList = response.data;
-                menu.found = completeList;
+                var completeList = [];
+                completeList = response.data;
+
+                console.log(completeList);
+                angular.forEach(completeList, function(element){
+
+                    console.log(element);
+
+
+                    angular.forEach(element.menu_items, function(item){
+                        console.log(item);
+                        if(item.description.indexOf(menu.searchTerm) !==-1)
+                            {
+                                found.push(item);
+                            };
+                    });
+
+                    
+                });
+
+                console.log("founs items in the menu:", found);
 
             })
             .catch(function(error){
                 console.log(error)
             })
 
-
-            //menu.found = MenuSearchService.getMatchedMenuItems(menu.searchTerm);
-
-            console.log("menu: ",menu.found);
+            console.log("menu: ", found);
         }
 
         menu.removeItem = function(itemIndex){
             console.log("remove item: ", itemIndex);
+            menu.found.splice(itemIndex, 1)
         };
 
     };
