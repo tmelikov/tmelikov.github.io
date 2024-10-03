@@ -22,7 +22,13 @@
       .state('categoryList', {
         url: '/category-list',
         templateUrl: 'src/templates/categoryList.template.html',
-        controller: 'CategoryController as categoryList'
+        controller: 'CategoryController as categoryList',
+        resolve: {
+          items: ['MenuDataService', function (MenuDataService) {
+            console.log("start get categories.");
+            return MenuDataService.getAllCategories();
+          }]
+        }
       })
     
     }
