@@ -16,14 +16,19 @@
       // Home page
       .state('home', {
         url: '/',
-        templateUrl: 'src/templates/home.template.html'
+        templateUrl: 'src/menuapp/templates/home.template.html'
       })
 
       .state('categoryList', {
         url: '/category-list',
-        templateUrl: 'src/templates/categoryList.template.html',
-        controller: 'CategoryController as categoryList'
-      })
+        templateUrl: 'src/menuapp/templates/categoryList.template.html',
+        controller: 'CategoryController as categoryList',
+        resolve: {
+          promise: ['MenuDataService', function (MenuDataService) {
+            return MenuDataService.getAllCategories();
+          }]
+        }
+      });
     
     }
     
