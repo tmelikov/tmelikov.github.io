@@ -11,7 +11,9 @@
 
       var itemList = this;
 
-      itemList.items = promise.data;
+      itemList.category = promise.data.category.short_name;
+
+      itemList.items = promise.data.menu_items;
     }
       
       })();

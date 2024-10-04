@@ -1,7 +1,12 @@
-<h3>Category List</h3>
-<a ui-sref="home">Home</a> &lt; <span>Categories</span>
+<h3>Items of the catergory {{itemList.category}}</h3>
+<a ui-sref="home">Home</a>  &lt;  &lt; <a ui-sref="categoryList">Categories</a> &lt; <span>Items</span>
 <ul>
     <li ng-repeat="item in itemList.items">
-      {{ item.name }}
+        {{item.name}}
+        <ul>
+            <li>short name: {{item.short_name}}</li>
+            <li>description: {{item.description}}</li>
+            <li>price: {{item.price_large}}</li>
+        </ul>
     </li>
   </ul>

@@ -31,17 +31,17 @@
         }
       })
       
-      .state('categoryList.itemList', {
+      .state('itemList', {
         url: '/item-list',
         templateUrl: 'src/menuapp/templates/itemList.template.html',
         controller: 'ItemListController as itemList',
         params: {
-          categoryShotname: null
+          categoryShortname: null
         },
         resolve:{
           promise: ['$stateParams', 'MenuDataService', function ($stateParams, MenuDataService) {
-            var categoryShotname = $stateParams.categoryShotname;
-            return MenuDataService.getItemsForCategory(categoryShotname);
+            var categoryShortname = $stateParams.categoryShortname;
+            return MenuDataService.getItemsForCategory(categoryShortname);
           }]
         }
       });
