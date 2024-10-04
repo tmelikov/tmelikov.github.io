@@ -19,6 +19,7 @@
         templateUrl: 'src/menuapp/templates/home.template.html'
       })
 
+      // Category list page
       .state('categoryList', {
         url: '/category-list',
         templateUrl: 'src/menuapp/templates/categoryList.template.html',
@@ -26,6 +27,21 @@
         resolve: {
           promise: ['MenuDataService', function (MenuDataService) {
             return MenuDataService.getAllCategories();
+          }]
+        }
+      })
+      
+      .state('categoryList.itemList', {
+        url: '/item-list',
+        templateUrl: 'src/menuapp/templates/itemList.template.html',
+        controller: 'ItemListController as itemList',
+        params: {
+          categoryShotname: null
+        },
+        resolve:{
+          promise: ['$stateParams', 'MenuDataService', function ($stateParams, MenuDataService) {
+            var categoryShotname = $stateParams.categoryShotname;
+            return MenuDataService.getItemsForCategory(categoryShotname);
           }]
         }
       });

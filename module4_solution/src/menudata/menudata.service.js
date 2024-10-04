@@ -10,16 +10,22 @@
       var service = this;
     
       service.getAllCategories = function (){
-
-        console.log("try get menu category from server")
-
-       console.log("menu data service: get tagegories");
-
-       var response = $http({
-           method: "GET",
-           url: ("https://coursera-jhu-default-rtdb.firebaseio.com/categories.json")
-       });
-       return response;
+        console.log("menu data service: get categories");
+        var response = $http({
+          method: "GET",
+          url: ("https://coursera-jhu-default-rtdb.firebaseio.com/categories.json")
+        });
+        return response;
       };
+
+      service.getItemsForCategory = function(categoryShortName){
+        console.log("menu data service: get items of the category: ", categoryShortName);
+        var response = $http({
+          method: "GET",
+          url: ("https://coursera-jhu-default-rtdb.firebaseio.com/menu_items/" + categoryShortName+".json")
+        });
+        return response;
+      }
+
     }
   })();
