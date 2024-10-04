@@ -1,11 +1,11 @@
 (function () {
     'use strict';
     
-    angular.module('MenuApp')
+    angular.module('MenuData')
     .service('MenuDataService', MenuDataService);
     
     MenuDataService.$inject = ['$http'];
-    //MenuDataService.$inject = ['$q', '$timeout']
+    
     function MenuDataService($http) {
       var service = this;
     
@@ -20,7 +20,6 @@
            url: ("https://coursera-jhu-default-rtdb.firebaseio.com/categories.json")
        });
        return response;
-    };
-  }
-    
-    })();
+      };
+    }
+  })();
